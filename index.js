@@ -1,21 +1,34 @@
-import { add } from "./utils.js";
+import { add, getTasks } from "./utils.js";
 
 // CLI logic
-const arg = process.argv.slice(2);
-const command = arg[0].toLowerCase();
+const args = process.argv.slice(2);
+const command = args[0].toLowerCase();
 
 switch (command) {
   case "add":
-    if (arg.length < 2) {
+    if (args.length < 2) {
       console.log("The 'add' command needs a description")
       process.exit(1);
     };
 
-    add(arg[1]);
-
+    add(args[1]);
     break;
   
   case "list":
+    if (args.length === 1 || args[1] === "all") {
+      getTasks("all");
+      process.exit(0);
+    }
+
+    if (!["done", "todo", "in-progress"].includes(args[1])) {
+      console.log(
+        "Invalid option provided to the 'list' command. valid options include: 'todo', 'done', 'in-progress'"
+      );
+      process.exit(9); // change to (1) later
+    };
+
+    getTasks(args[1]);
+
     break;
   
   case "update":
