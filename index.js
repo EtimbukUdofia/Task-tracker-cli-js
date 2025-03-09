@@ -1,4 +1,4 @@
-import { add, getTasks } from "./utils.js";
+import { addTask, getTasks } from "./utils.js";
 
 // CLI logic
 const args = process.argv.slice(2);
@@ -11,7 +11,7 @@ switch (command) {
       process.exit(1);
     };
 
-    add(args[1]);
+    addTask(args[1]);
     break;
   
   case "list":

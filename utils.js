@@ -6,7 +6,7 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const tasksPath = path.join(__dirname, "tasks.json");
 
-export const add = (description) => {
+export const addTask = (description) => {
   let tasks = fs.existsSync(tasksPath) ? JSON.parse(fs.readFileSync(tasksPath)) : [];
   const newTask = {
     id: tasks[tasks.length - 1]?.id + 1 || 0,
