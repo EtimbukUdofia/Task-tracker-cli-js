@@ -59,6 +59,15 @@ switch (command) {
     break;
   
   case "mark-done":
+    try {
+      if (args.length < 2) {
+        throw new Error("The 'mark-done' command needs an id option");
+      }
+
+      updateTask(args[1], { status: "done" });
+    } catch (error) {
+      console.log(error);
+    }
     break;
   
   case "help":
