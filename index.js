@@ -1,4 +1,4 @@
-import { addTask, getTasks, updateTask } from "./utils.js";
+import { addTask, getTasks, updateTask, deleteTask } from "./utils.js";
 
 // CLI logic
 const args = process.argv.slice(2);
@@ -47,6 +47,15 @@ switch (command) {
     break;
   
   case "mark-in-progress":
+    try {
+      if (args.length < 2) {
+        throw new Error("The 'mark-in-progress' command needs an id option");
+      }
+
+      updateTask(args[1], { status: "in-progress" });
+    } catch (error) {
+      console.log(error);
+    }
     break;
   
   case "mark-done":
