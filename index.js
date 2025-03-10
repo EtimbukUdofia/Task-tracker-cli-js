@@ -44,6 +44,15 @@ switch (command) {
     break;
   
   case "delete":
+    try {
+      if (args.length < 2) {
+        throw new Error("The 'delete' command needs an id value");
+      }
+      
+      deleteTask(args[1]);
+    } catch (error) {
+      console.log(error);
+    }
     break;
   
   case "mark-in-progress":

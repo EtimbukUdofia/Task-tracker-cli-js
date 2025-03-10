@@ -7,25 +7,26 @@ const __dirname = path.dirname(__filename);
 const tasksPath = path.join(__dirname, "tasks.json");
 
 export const addTask = (description) => {
-  let tasks = fs.existsSync(tasksPath) ? JSON.parse(fs.readFileSync(tasksPath)) : [];
-  const newTask = {
-    id: tasks[tasks.length - 1]?.id + 1 || 0,
-    description,
-    status: "todo",
-    createdAt: new Date().toString(),
-    updatedAt: new Date().toString(),
-  };
-
-  tasks = [...tasks, newTask];
   try {
+    let tasks = fs.existsSync(tasksPath) ? JSON.parse(fs.readFileSync(tasksPath)) : [];
+    const newTask = {
+      id: tasks[tasks.length - 1]?.id + 1 || 0,
+      description,
+      status: "todo",
+      createdAt: new Date().toString(),
+      updatedAt: new Date().toString(),
+    };
+  
+    tasks = [...tasks, newTask];
+    
     fs.writeFileSync(tasksPath, JSON.stringify(tasks));
+    // I might need to return something here for testing purposes
+    // return newTask;
+    console.log("Task added successfully", `ID: ${newTask.id}`);
   } catch (error) {
     console.log(error);
   }
 
-  // I might need to return something here for testing purposes
-  // return newTask;
-  console.log("Task added successfully", `ID: ${newTask.id}`);
 }
 
 export const getTasks = (status) => {
@@ -88,6 +89,35 @@ export const updateTask = (id, option) => {
     fs.writeFileSync(tasksPath, JSON.stringify(tasks));
 
     console.log("Task updated successfully");
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+export const deleteTask = (id) => {
+  try {
+    const taskId = Number(id);
+  
+    if (isNaN(taskId)) {
+      throw new Error("ID must be a number");
+    }
+
+    checkTasksFile();
+
+    const tasks = JSON.parse(fs.readFileSync(tasksPath));
+
+    const taskToDelete = tasks.find((task) => task.id === taskId);
+
+    if (taskToDelete) {
+      const filteredTasks = tasks.filter((task) => task.id !== taskId);
+
+      fs.writeFileSync(tasksPath, JSON.stringify(filteredTasks));
+
+      console.log("Task deleted successfully");
+    } else {
+      throw new Error(`There is no task with the ID of ${taskId}`);
+    }
+    
   } catch (error) {
     console.log(error);
   }
