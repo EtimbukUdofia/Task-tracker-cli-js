@@ -7,13 +7,13 @@ const command = args[0].toLowerCase();
 switch (command) {
   case "add":
     if (args.length < 2) {
-      console.log("The 'add' command needs a description")
+      console.log("The 'add' command needs a description");
       process.exit(1);
-    };
+    }
 
     addTask(args[1]);
     break;
-  
+
   case "list":
     if (args.length === 1 || args[1] === "all") {
       getTasks("all");
@@ -25,36 +25,36 @@ switch (command) {
         "Invalid option provided to the 'list' command. valid options include: 'todo', 'done', 'in-progress'"
       );
       process.exit(9); // change to (1) later
-    };
+    }
 
     getTasks(args[1]);
 
     break;
-  
+
   case "update":
     try {
       if (args.length < 3) {
         throw new Error("The 'update' command needs an id and a description");
       }
 
-      updateTask(args[1], {description: args[2]});
+      updateTask(args[1], { description: args[2] });
     } catch (error) {
       console.log(error);
     }
     break;
-  
+
   case "delete":
     try {
       if (args.length < 2) {
         throw new Error("The 'delete' command needs an id value");
       }
-      
+
       deleteTask(args[1]);
     } catch (error) {
       console.log(error);
     }
     break;
-  
+
   case "mark-in-progress":
     try {
       if (args.length < 2) {
@@ -66,7 +66,7 @@ switch (command) {
       console.log(error);
     }
     break;
-  
+
   case "mark-done":
     try {
       if (args.length < 2) {
@@ -78,7 +78,7 @@ switch (command) {
       console.log(error);
     }
     break;
-  
+
   case "help":
     break;
 

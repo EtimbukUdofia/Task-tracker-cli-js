@@ -8,7 +8,9 @@ const tasksPath = path.join(__dirname, "tasks.json");
 
 export const addTask = (description) => {
   try {
-    let tasks = fs.existsSync(tasksPath) ? JSON.parse(fs.readFileSync(tasksPath)) : [];
+    let tasks = fs.existsSync(tasksPath)
+      ? JSON.parse(fs.readFileSync(tasksPath))
+      : [];
     const newTask = {
       id: tasks[tasks.length - 1]?.id + 1 || 0,
       description,
@@ -16,9 +18,9 @@ export const addTask = (description) => {
       createdAt: new Date().toString(),
       updatedAt: new Date().toString(),
     };
-  
+
     tasks = [...tasks, newTask];
-    
+
     fs.writeFileSync(tasksPath, JSON.stringify(tasks));
     // I might need to return something here for testing purposes
     // return newTask;
@@ -26,8 +28,7 @@ export const addTask = (description) => {
   } catch (error) {
     console.log(error);
   }
-
-}
+};
 
 export const getTasks = (status) => {
   try {
@@ -38,23 +39,23 @@ export const getTasks = (status) => {
     if (status === "all") {
       tasks.forEach((task, index) => {
         console.log(`${index + 1}. ${task.description}, (ID: ${task.id})`);
-      })
+      });
     } else {
       const filteredTasks = tasks.filter((task) => task.status === status);
 
       if (filteredTasks.length < 1) {
-        console.log(`You have no current '${status}' tasks.`)
+        console.log(`You have no current '${status}' tasks.`);
       } else {
         filteredTasks.forEach((task, index) => {
           console.log(`Your '${status}' tasks are: `);
           console.log(`${index + 1}. ${task.description} (ID: ${task.id})`);
-        })
+        });
       }
     }
   } catch (error) {
     console.log(error);
   }
-}
+};
 
 export const updateTask = (id, option) => {
   try {
@@ -65,7 +66,7 @@ export const updateTask = (id, option) => {
     }
 
     checkTasksFile();
-    
+
     const tasks = JSON.parse(fs.readFileSync(tasksPath));
 
     const taskToUpdate = tasks.find((task) => task.id === taskId);
@@ -74,11 +75,11 @@ export const updateTask = (id, option) => {
       tasks.forEach((task) => {
         if (task.id === taskId) {
           if (option.description) {
-            task.description = option.description
+            task.description = option.description;
           } else {
-            task.status = option.status
+            task.status = option.status;
           }
-  
+
           task.updatedAt = new Date().toString();
         }
       });
@@ -92,12 +93,12 @@ export const updateTask = (id, option) => {
   } catch (error) {
     console.log(error);
   }
-}
+};
 
 export const deleteTask = (id) => {
   try {
     const taskId = Number(id);
-  
+
     if (isNaN(taskId)) {
       throw new Error("ID must be a number");
     }
@@ -117,14 +118,13 @@ export const deleteTask = (id) => {
     } else {
       throw new Error(`There is no task with the ID of ${taskId}`);
     }
-    
   } catch (error) {
     console.log(error);
   }
-}
+};
 
 const checkTasksFile = () => {
   if (!fs.existsSync(tasksPath)) {
     throw new Error("No task currently in memory");
   }
-}
+};
