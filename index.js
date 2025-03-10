@@ -37,9 +37,9 @@ switch (command) {
         throw new Error("The 'update' command needs an id and a description");
       }
 
-      updateTask(args[1], args[2]);
+      updateTask(args[1], {description: args[2]});
     } catch (error) {
-      console.log(error.message);
+      console.log(error);
     }
     break;
   

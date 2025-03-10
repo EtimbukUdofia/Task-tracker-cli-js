@@ -20,7 +20,7 @@ export const addTask = (description) => {
   try {
     fs.writeFileSync(tasksPath, JSON.stringify(tasks));
   } catch (error) {
-    console.log(err);
+    console.log(error);
   }
 
   // I might need to return something here for testing purposes
@@ -51,11 +51,11 @@ export const getTasks = (status) => {
       }
     }
   } catch (error) {
-    console.log(error.message);
+    console.log(error);
   }
 }
 
-export const updateTask = (id, description = null, status = null) => {
+export const updateTask = (id, option) => {
   try {
     const taskId = Number(id);
 
@@ -72,10 +72,10 @@ export const updateTask = (id, description = null, status = null) => {
     if (taskToUpdate) {
       tasks.forEach((task) => {
         if (task.id === taskId) {
-          if (description) {
-            task.description = description
+          if (option.description) {
+            task.description = option.description
           } else {
-            task.status = status
+            task.status = option.status
           }
   
           task.updatedAt = new Date().toString();
@@ -89,7 +89,7 @@ export const updateTask = (id, description = null, status = null) => {
 
     console.log("Task updated successfully");
   } catch (error) {
-    console.log(error.message);
+    console.log(error);
   }
 }
 
