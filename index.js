@@ -1,4 +1,4 @@
-import { addTask, getTasks } from "./utils.js";
+import { addTask, getTasks, updateTask } from "./utils.js";
 
 // CLI logic
 const args = process.argv.slice(2);
@@ -17,7 +17,7 @@ switch (command) {
   case "list":
     if (args.length === 1 || args[1] === "all") {
       getTasks("all");
-      process.exit(0);
+      process.exit(0); // throw an error instead;
     }
 
     if (!["done", "todo", "in-progress"].includes(args[1])) {
@@ -32,6 +32,15 @@ switch (command) {
     break;
   
   case "update":
+    try {
+      if (args.length < 3) {
+        throw new Error("The 'update' command needs an id and a description");
+      }
+
+      updateTask(args[1], args[2]);
+    } catch (error) {
+      console.log(error.message);
+    }
     break;
   
   case "delete":

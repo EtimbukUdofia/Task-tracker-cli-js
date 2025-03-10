@@ -25,20 +25,18 @@ export const addTask = (description) => {
 
   // I might need to return something here for testing purposes
   // return newTask;
-  console.log("Task added successfully");
+  console.log("Task added successfully", `ID: ${newTask.id}`);
 }
 
 export const getTasks = (status) => {
   try {
-    if (!fs.existsSync(tasksPath)) {
-      throw new Error("No task currently in memory");
-    };
+    checkTasksFile();
 
     const tasks = JSON.parse(fs.readFileSync(tasksPath));
 
     if (status === "all") {
       tasks.forEach((task, index) => {
-        console.log(`${index + 1}. ${task.description}`);
+        console.log(`${index + 1}. ${task.description}, (ID: ${task.id})`);
       })
     } else {
       const filteredTasks = tasks.filter((task) => task.status === status);
@@ -48,11 +46,55 @@ export const getTasks = (status) => {
       } else {
         filteredTasks.forEach((task, index) => {
           console.log(`Your '${status}' tasks are: `);
-          console.log(`${index + 1}. ${task.description}`);
+          console.log(`${index + 1}. ${task.description} (ID: ${task.id})`);
         })
       }
     }
   } catch (error) {
     console.log(error.message);
+  }
+}
+
+export const updateTask = (id, description = null, status = null) => {
+  try {
+    const taskId = Number(id);
+
+    if (isNaN(taskId)) {
+      throw new Error("ID must be a number");
+    }
+
+    checkTasksFile();
+    
+    const tasks = JSON.parse(fs.readFileSync(tasksPath));
+
+    const taskToUpdate = tasks.find((task) => task.id === taskId);
+
+    if (taskToUpdate) {
+      tasks.forEach((task) => {
+        if (task.id === taskId) {
+          if (description) {
+            task.description = description
+          } else {
+            task.status = status
+          }
+  
+          task.updatedAt = new Date().toString();
+        }
+      });
+    } else {
+      throw new Error(`There is no task with the ID of ${taskId}`);
+    }
+
+    fs.writeFileSync(tasksPath, JSON.stringify(tasks));
+
+    console.log("Task updated successfully");
+  } catch (error) {
+    console.log(error.message);
+  }
+}
+
+const checkTasksFile = () => {
+  if (!fs.existsSync(tasksPath)) {
+    throw new Error("No task currently in memory");
   }
 }
