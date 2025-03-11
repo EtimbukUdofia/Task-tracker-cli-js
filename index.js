@@ -1,3 +1,5 @@
+#!/usr/bin/env node
+// import { version } from "./package.json";
 import { addTask, getTasks, updateTask, deleteTask } from "./utils.js";
 
 // CLI logic
@@ -79,10 +81,14 @@ switch (command) {
     }
     break;
 
+  // case "version":
+  //   console.log(version);
+  //   break;
+  
   case "help":
     break;
 
   default:
-    console.log("command not found");
+    console.log(`<command> ${command} not found`);
     break;
 }
