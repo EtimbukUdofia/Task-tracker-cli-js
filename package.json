@@ -4,7 +4,7 @@
   "description": "simple task tracking app for CLI",
   "main": "index.js",
   "scripts": {
-    "test": "jest"
+    "test": "jest --silent"
   },
   "bin": {
     "task-cli": "./src/index.js"
