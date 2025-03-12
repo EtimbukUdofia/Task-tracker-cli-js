@@ -8,6 +8,9 @@ const addTask = (description) => {
     let tasks = fs.existsSync(tasksPath)
       ? JSON.parse(fs.readFileSync(tasksPath))
       : [];
+
+    // handle duplicate tasks
+    
     const newTask = {
       id: tasks[tasks.length - 1]?.id + 1 || 0,
       description,
@@ -20,8 +23,8 @@ const addTask = (description) => {
 
     fs.writeFileSync(tasksPath, JSON.stringify(tasks));
     // I might need to return something here for testing purposes
-    // return newTask;
     console.log("Task added successfully", `ID: ${newTask.id}`);
+    return newTask;
   } catch (error) {
     console.log(error);
   }
