@@ -1,6 +1,5 @@
 #!/usr/bin/env node
-// import { version } from "./package.json";
-import { addTask, getTasks, updateTask, deleteTask } from "./utils.js";
+const { addTask, getTasks, updateTask, deleteTask } = require("./utils.js");
 
 // CLI logic
 const args = process.argv.slice(2);

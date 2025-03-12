@@ -4,14 +4,14 @@
   "description": "simple task tracking app for CLI",
   "main": "index.js",
   "scripts": {
-    "test": "jest ./test",
+    "test": "jest"
   },
   "bin": {
     "task-cli": "./src/index.js"
   },
   "author": "EtimbukUdofia",
   "license": "ISC",
-  "type": "module",
+  "type": "common",
   "devDependencies": {
     "jest": "^29.7.0"
   }

@@ -1,12 +1,9 @@
-import fs from "fs";
-import path from "path";
-import { fileURLToPath } from "url";
+const fs = require("fs");
+const path = require("path");
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
 const tasksPath = path.join(__dirname, "tasks.json");
 
-export const addTask = (description) => {
+const addTask = (description) => {
   try {
     let tasks = fs.existsSync(tasksPath)
       ? JSON.parse(fs.readFileSync(tasksPath))
@@ -30,7 +27,7 @@ export const addTask = (description) => {
   }
 };
 
-export const getTasks = (status) => {
+const getTasks = (status) => {
   try {
     checkTasksFile();
 
@@ -57,7 +54,7 @@ export const getTasks = (status) => {
   }
 };
 
-export const updateTask = (id, option) => {
+const updateTask = (id, option) => {
   try {
     const taskId = Number(id);
 
@@ -95,7 +92,7 @@ export const updateTask = (id, option) => {
   }
 };
 
-export const deleteTask = (id) => {
+const deleteTask = (id) => {
   try {
     const taskId = Number(id);
 
@@ -127,4 +124,8 @@ const checkTasksFile = () => {
   if (!fs.existsSync(tasksPath)) {
     throw new Error("No task currently in memory");
   }
+};
+
+module.exports = {
+  addTask, getTasks, updateTask, deleteTask
 };
