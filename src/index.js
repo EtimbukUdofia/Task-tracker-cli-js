@@ -16,20 +16,23 @@ switch (command) {
     break;
 
   case "list":
-    if (args.length === 1 || args[1] === "all") {
-      getTasks("all");
-      process.exit(0); // throw an error instead;
+    try {
+      if (args.length === 1 || args[1] === "all") {
+        getTasks("all");
+        process.exit(0);
+      }
+  
+      if (!["done", "todo", "in-progress"].includes(args[1])) {
+        throw new Error(
+          "Invalid option provided to the 'list' command. valid options include: 'todo', 'done', 'in-progress'"
+        );
+      }
+  
+      getTasks(args[1]);
+      
+    } catch (error) {
+      console.log(error);
     }
-
-    if (!["done", "todo", "in-progress"].includes(args[1])) {
-      console.log(
-        "Invalid option provided to the 'list' command. valid options include: 'todo', 'done', 'in-progress'"
-      );
-      process.exit(9); // change to (1) later
-    }
-
-    getTasks(args[1]);
-
     break;
 
   case "update":
