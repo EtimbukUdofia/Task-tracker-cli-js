@@ -37,23 +37,31 @@ const getTasks = (status) => {
     const tasks = JSON.parse(fs.readFileSync(tasksPath));
 
     if (status === "all") {
+      if (tasks.length < 1) {
+        throw new Error(`No tasks found`);
+      }
+
       tasks.forEach((task, index) => {
-        console.log(`${index + 1}. ${task.description}, (ID: ${task.id})`);
+        console.log(`${index + 1}. ${task.description} (ID: ${task.id})`);
       });
+      return tasks;
     } else {
       const filteredTasks = tasks.filter((task) => task.status === status);
 
       if (filteredTasks.length < 1) {
-        console.log(`You have no current '${status}' tasks.`);
+        throw new Error(`No tasks found for status '${status}'`);
       } else {
         filteredTasks.forEach((task, index) => {
           console.log(`Your '${status}' tasks are: `);
           console.log(`${index + 1}. ${task.description} (ID: ${task.id})`);
         });
+
+        return filteredTasks;
       }
     }
   } catch (error) {
-    console.log(error);
+    console.error("Error getting tasks", error);
+    throw error;
   }
 };
 
