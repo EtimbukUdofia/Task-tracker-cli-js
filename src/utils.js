@@ -10,7 +10,7 @@ const addTask = (description) => {
       : [];
 
     // handle duplicate tasks
-    const duplicateTask = tasks.find((task) => task.description.toLowerCase() === description.toLowerCase());
+    const duplicateTask = tasks.find((task) => task.description.toLowerCase() === description.toLowerCase() && task.status === "todo");
     if (duplicateTask) {
       throw new Error(`A task already exists with that description`);
     }
