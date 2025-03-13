@@ -16,7 +16,7 @@ const addTask = (description) => {
     }
     
     const newTask = {
-      id: tasks[tasks.length - 1]?.id + 1 || 0,
+      id: tasks[tasks.length - 1]?.id + 1 || 1,
       description,
       status: "todo",
       createdAt: new Date().toString(),
@@ -31,6 +31,7 @@ const addTask = (description) => {
     return newTask;
   } catch (error) {
     console.log(error);
+    throw error;
   }
 };
 
