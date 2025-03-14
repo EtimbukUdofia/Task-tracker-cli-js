@@ -8,7 +8,7 @@ describe("addTask function", () => {
     jest.clearAllMocks();
   });
 
-  test("should log and return added task", () => {
+  test("should add a new task successfully", () => {
     const consoleSpy = jest.spyOn(console, "log").mockImplementation(() => {});
 
     fs.readFileSync.mockReturnValue(JSON.stringify([]));
@@ -28,6 +28,12 @@ describe("addTask function", () => {
     // ensures createdAt and updatedAt are valid date strings
     expect(new Date(result.createdAt).toString()).not.toBe("Invalid Date");
     expect(new Date(result.updatedAt).toString()).not.toBe("Invalid Date");
+
+    // ensure fs.writeFileSync() was called correctly
+    expect(fs.writeFileSync).toHaveBeenCalledWith(
+      expect.any(String),
+      expect.stringContaining('"description":"Task 1"')
+    );
 
     expect(consoleSpy).toHaveBeenCalledWith(
       `Task added successfully`,
@@ -52,9 +58,7 @@ describe("addTask function", () => {
   });
 
   test("should correctly increment task ID", () => {
-    const mockTask = [
-      { id: 1, description: "Existing task", status: "todo" }
-    ]
+    const mockTask = [{ id: 1, description: "Existing task", status: "todo" }];
     fs.existsSync.mockReturnValue(true);
     fs.readFileSync.mockReturnValue(JSON.stringify(mockTask));
 
