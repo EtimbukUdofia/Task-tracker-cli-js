@@ -89,8 +89,10 @@ const updateTask = (id, option) => {
         if (task.id === taskId) {
           if (option.description) {
             task.description = option.description;
-          } else {
+          } else if (option.status) {
             task.status = option.status;
+          } else {
+            throw new Error("Error in updateTask: A description or status is needed");
           }
 
           task.updatedAt = new Date().toString();
@@ -105,6 +107,7 @@ const updateTask = (id, option) => {
     console.log("Task updated successfully");
   } catch (error) {
     console.log(error);
+    throw error;
   }
 };
 
