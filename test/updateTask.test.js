@@ -9,7 +9,7 @@ describe("updateTask function", () => {
     console.log = jest.fn();
   });
 
-  test('should update a task if given description', () => { 
+  test("should update a task if given description", () => {
     const mockTasks = [
       {
         id: 1,
@@ -32,34 +32,34 @@ describe("updateTask function", () => {
     expect(result.updatedAt).not.toBe(mockTasks[0].updatedAt);
 
     expect(console.log).toHaveBeenCalledWith("Task updated successfully");
-   });
+  });
 
-  test('should update a task if given status', () => { 
+  test("should update a task if given status", () => {
     const mockTasks = [
       {
         id: 1,
         description: "Task 1",
         status: "todo",
-        updatedAt: new Date(new Date() - Math.random() * (1e12)).toString(),
-      }
+        updatedAt: new Date(new Date() - Math.random() * 1e12).toString(),
+      },
     ];
 
     fs.existsSync.mockReturnValue(true);
     fs.readFileSync.mockReturnValue(JSON.stringify(mockTasks));
 
     const result = updateTask(1, { status: "done" });
-    
+
     expect(result).toHaveProperty("id");
     expect(result).toHaveProperty("description", "Task 1");
     expect(result).toHaveProperty("status", "done");
     expect(result).toHaveProperty("updatedAt");
 
     expect(result.updatedAt).not.toBe(mockTasks[0].updatedAt);
-    
-    expect(console.log).toHaveBeenCalledWith("Task updated successfully");
-   });
 
-  test('should log an error and throw if provided ID is not a number', () => { 
+    expect(console.log).toHaveBeenCalledWith("Task updated successfully");
+  });
+
+  test("should log an error and throw if provided ID is not a number", () => {
     fs.existsSync.mockReturnValue(true);
     fs.readFileSync.mockReturnValue(JSON.stringify([]));
 
@@ -67,9 +67,9 @@ describe("updateTask function", () => {
       "ID must be a number"
     );
     expect(console.log).toHaveBeenCalledWith(expect.any(Error));
-   })
+  });
 
-  test('should log an error and throw if there is no task with ID', () => { 
+  test("should log an error and throw if there is no task with ID", () => {
     const mockTasks = [
       { id: 1, description: "Task 1", status: "todo" },
       { id: 2, description: "Task 2", status: "todo" },
@@ -82,14 +82,14 @@ describe("updateTask function", () => {
       "There is no task with the ID of 3"
     );
     expect(console.log).toHaveBeenCalledWith(expect.any(Error));
-   });
+  });
 
-  test('should log an error and throw if there is no description or status', () => { 
+  test("should log an error and throw if there is no description or status", () => {
     const mockTasks = [
       { id: 1, description: "Task 1", status: "todo" },
       { id: 2, description: "Task 2", status: "todo" },
     ];
-    
+
     fs.existsSync.mockReturnValue(true);
     fs.readFileSync.mockReturnValue(JSON.stringify(mockTasks));
 
@@ -97,16 +97,18 @@ describe("updateTask function", () => {
       "Error in updateTask: A description or status is needed"
     );
     expect(console.log).toHaveBeenCalledWith(expect.any(Error));
-   })
+  });
 
-  test('should log an error and throw when an error occurs', () => { 
+  test("should log an error and throw when an error occurs", () => {
     fs.existsSync.mockReturnValue(true);
 
     fs.readFileSync.mockImplementation(() => {
-      throw new Error('File system error');
+      throw new Error("File system error");
     });
 
-    expect(() => updateTask(1, {status: "done"})).toThrow("File system error");
+    expect(() => updateTask(1, { status: "done" })).toThrow(
+      "File system error"
+    );
     expect(console.log).toHaveBeenCalledWith(expect.any(Error));
-   })
-})
+  });
+});
