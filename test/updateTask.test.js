@@ -69,7 +69,7 @@ describe("updateTask function", () => {
     expect(console.log).toHaveBeenCalledWith(expect.any(Error));
   });
 
-  test("should log an error and throw if there is no task with ID", () => {
+  test("should log an error and throw if there is no task with provided ID", () => {
     const mockTasks = [
       { id: 1, description: "Task 1", status: "todo" },
       { id: 2, description: "Task 2", status: "todo" },
