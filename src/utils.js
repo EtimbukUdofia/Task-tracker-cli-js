@@ -87,9 +87,9 @@ const updateTask = (id, option) => {
     if (taskToUpdate) {
       tasks.forEach((task) => {
         if (task.id === taskId) {
-          if (option.description) {
+          if (option?.description) {
             task.description = option.description;
-          } else if (option.status) {
+          } else if (option?.status) {
             task.status = option.status;
           } else {
             throw new Error("Error in updateTask: A description or status is needed");
