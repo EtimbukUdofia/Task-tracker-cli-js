@@ -73,6 +73,7 @@ const getTasks = (status) => {
 const updateTask = (id, option) => {
   try {
     const taskId = Number(id);
+    let updatedTask;
 
     if (isNaN(taskId)) {
       throw new Error("ID must be a number");
@@ -96,6 +97,7 @@ const updateTask = (id, option) => {
           }
 
           task.updatedAt = new Date().toString();
+          updatedTask = task;
         }
       });
     } else {
@@ -103,8 +105,9 @@ const updateTask = (id, option) => {
     }
 
     fs.writeFileSync(tasksPath, JSON.stringify(tasks));
-
     console.log("Task updated successfully");
+    
+    return updatedTask;
   } catch (error) {
     console.log(error);
     throw error;
