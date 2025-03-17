@@ -1,4 +1,5 @@
 #!/usr/bin/env node
+const readline = require("readline");
 const { addTask, getTasks, updateTask, deleteTask } = require("./utils.js");
 
 // CLI logic
@@ -49,10 +50,34 @@ switch (command) {
   case "delete":
     try {
       if (args.length < 2) {
-        throw new Error("The 'delete' command needs an id value");
+        throw new Error(
+          "The 'delete' command needs an 'id' value or delete all tasks with the 'all' option"
+        );
       }
-
-      deleteTask(args[1]);
+      
+      if (args[1] === "all") {
+        const rl = readline.createInterface({
+          input: process.stdin,
+          output: process.stdout,
+        });
+        rl.question(
+          `Are you sure you want to delete all your tasks? (Y/n): `,
+          (answer) => {
+            if (answer === "" || answer.toLowerCase() === "y") {
+              deleteTask("all");
+            } else if (answer.toLowerCase() === "n") {
+              console.log("Deletion cancelled");
+            } else {
+              console.log(
+                `Unknown command: '${answer}'. Enter either 'y' or 'n'`
+              );
+            }
+            rl.close();
+          }
+        );
+      } else {
+        deleteTask(args[1]);
+      }
     } catch (error) {
       console.log(error);
     }

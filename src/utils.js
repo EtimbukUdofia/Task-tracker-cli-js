@@ -9,6 +9,8 @@ const addTask = (description) => {
       ? JSON.parse(fs.readFileSync(tasksPath))
       : [];
 
+    description = description.replace(/(\r\n|\n|\r)/gm, ""); // removes line breaks from text
+
     // handle duplicate tasks
     const duplicateTask = tasks.find(
       (task) =>
@@ -120,29 +122,41 @@ const updateTask = (id, option) => {
   }
 };
 
-const deleteTask = (id) => {
+const deleteTask = (option) => {
   try {
-    const taskId = Number(id);
+    if (option !== "all") {
+      const taskId = Number(option);
 
-    if (isNaN(taskId)) {
-      throw new Error("ID must be a number");
-    }
+      if (isNaN(taskId)) {
+        throw new Error("ID must be a number");
+      }
 
-    checkTasksFile();
+      checkTasksFile();
 
-    const tasks = JSON.parse(fs.readFileSync(tasksPath));
+      const tasks = JSON.parse(fs.readFileSync(tasksPath));
 
-    const taskToDelete = tasks.find((task) => task.id === taskId);
+      const taskToDelete = tasks.find((task) => task.id === taskId);
 
-    if (taskToDelete) {
-      const filteredTasks = tasks.filter((task) => task.id !== taskId);
+      if (taskToDelete) {
+        const filteredTasks = tasks.filter((task) => task.id !== taskId);
 
-      fs.writeFileSync(tasksPath, JSON.stringify(filteredTasks));
+        fs.writeFileSync(tasksPath, JSON.stringify(filteredTasks));
 
-      console.log("Task deleted successfully");
-      return taskToDelete;
+        console.log("Task deleted successfully");
+        return taskToDelete;
+      } else {
+        throw new Error(`There is no task with the ID of ${taskId}`);
+      }
     } else {
-      throw new Error(`There is no task with the ID of ${taskId}`);
+      checkTasksFile();
+      const tasks = JSON.parse(fs.readFileSync(tasksPath));
+
+      if (tasks.length === 0) {
+        throw new Error("No task currently in memory");
+      }
+
+      fs.writeFileSync(tasksPath, JSON.stringify([]));
+      console.log("All tasks deleted successfully");
     }
   } catch (error) {
     console.log(error);
