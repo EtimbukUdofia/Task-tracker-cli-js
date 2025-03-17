@@ -10,11 +10,15 @@ const addTask = (description) => {
       : [];
 
     // handle duplicate tasks
-    const duplicateTask = tasks.find((task) => task.description.toLowerCase() === description.toLowerCase() && task.status === "todo");
+    const duplicateTask = tasks.find(
+      (task) =>
+        task.description.toLowerCase() === description.toLowerCase() &&
+        task.status === "todo"
+    );
     if (duplicateTask) {
       throw new Error(`A task already exists with that description`);
     }
-    
+
     const newTask = {
       id: tasks[tasks.length - 1]?.id + 1 || 1,
       description,
@@ -93,7 +97,9 @@ const updateTask = (id, option) => {
           } else if (option?.status) {
             task.status = option.status;
           } else {
-            throw new Error("Error in updateTask: A description or status is needed");
+            throw new Error(
+              "Error in updateTask: A description or status is needed"
+            );
           }
 
           task.updatedAt = new Date().toString();
@@ -151,5 +157,8 @@ const checkTasksFile = () => {
 };
 
 module.exports = {
-  addTask, getTasks, updateTask, deleteTask
+  addTask,
+  getTasks,
+  updateTask,
+  deleteTask,
 };

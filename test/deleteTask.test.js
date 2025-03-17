@@ -10,7 +10,10 @@ describe("deleteTask function", () => {
   });
 
   test("should delete a task given it's ID", () => {
-    const mockTasks = [{ id: 1, description: "Task 1", status: "todo" }, { id: 2, description: "Task 2", status: "done" }];
+    const mockTasks = [
+      { id: 1, description: "Task 1", status: "todo" },
+      { id: 2, description: "Task 2", status: "done" },
+    ];
 
     fs.existsSync.mockReturnValue(true);
     fs.readFileSync.mockImplementation(() => JSON.stringify(mockTasks));
@@ -18,7 +21,10 @@ describe("deleteTask function", () => {
     const result = deleteTask(2);
 
     expect(result).toEqual(mockTasks[1]);
-    expect(fs.writeFileSync).toHaveBeenCalledWith(expect.any(String), JSON.stringify(mockTasks.slice(0, 1)));
+    expect(fs.writeFileSync).toHaveBeenCalledWith(
+      expect.any(String),
+      JSON.stringify(mockTasks.slice(0, 1))
+    );
     expect(console.log).toHaveBeenCalledWith("Task deleted successfully");
   });
 
@@ -33,12 +39,10 @@ describe("deleteTask function", () => {
   });
 
   test("should log an erorr and throw if there is no task with the provided ID", () => {
-    const mockTasks = [
-      {id: 1, description: 'Task 1', status: 'todo'}
-    ]
+    const mockTasks = [{ id: 1, description: "Task 1", status: "todo" }];
 
     fs.existsSync.mockReturnValue(true);
-    fs.readFileSync.mockImplementation(()=> JSON.stringify(mockTasks));
+    fs.readFileSync.mockImplementation(() => JSON.stringify(mockTasks));
 
     expect(() => deleteTask(2)).toThrow("There is no task with the ID of 2");
     expect(console.log).toHaveBeenCalled();
@@ -51,9 +55,7 @@ describe("deleteTask function", () => {
       throw new Error("File system error");
     });
 
-    expect(() => deleteTask(1)).toThrow(
-      "File system error"
-    );
+    expect(() => deleteTask(1)).toThrow("File system error");
     expect(console.log).toHaveBeenCalledWith(expect.any(Error));
   });
 });
