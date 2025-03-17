@@ -106,7 +106,7 @@ const updateTask = (id, option) => {
 
     fs.writeFileSync(tasksPath, JSON.stringify(tasks));
     console.log("Task updated successfully");
-    
+
     return updatedTask;
   } catch (error) {
     console.log(error);
@@ -134,11 +134,13 @@ const deleteTask = (id) => {
       fs.writeFileSync(tasksPath, JSON.stringify(filteredTasks));
 
       console.log("Task deleted successfully");
+      return taskToDelete;
     } else {
       throw new Error(`There is no task with the ID of ${taskId}`);
     }
   } catch (error) {
     console.log(error);
+    throw error;
   }
 };
 
