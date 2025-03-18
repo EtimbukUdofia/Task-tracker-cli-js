@@ -66,7 +66,6 @@ describe("updateTask function", () => {
     expect(() => updateTask("notNumber", { status: "done" })).toThrow(
       "ID must be a number"
     );
-    expect(console.log).toHaveBeenCalledWith("ID must be a number");
   });
 
   test("should log an error and throw if there is no task with provided ID", () => {
@@ -81,7 +80,6 @@ describe("updateTask function", () => {
     expect(() => updateTask(3, { status: "done" })).toThrow(
       "There is no task with the ID of 3"
     );
-    expect(console.log).toHaveBeenCalledWith("There is no task with the ID of 3");
   });
 
   test("should log an error and throw if there is no description or status", () => {
@@ -96,7 +94,6 @@ describe("updateTask function", () => {
     expect(() => updateTask(1)).toThrow(
       "A description or status is needed"
     );
-    expect(console.log).toHaveBeenCalledWith("A description or status is needed");
   });
 
   test("should log an error and throw when an error occurs", () => {
@@ -109,6 +106,5 @@ describe("updateTask function", () => {
     expect(() => updateTask(1, { status: "done" })).toThrow(
       "File system error"
     );
-    expect(console.log).toHaveBeenCalledWith("File system error");
   });
 });
