@@ -8,12 +8,15 @@ const command = args[0].toLowerCase();
 
 switch (command) {
   case "add":
-    if (args.length < 2) {
-      console.log("The 'add' command needs a description");
-      process.exit(1);
+    try {
+      if (args.length < 2) {
+        throw new Error("The 'add' command needs a description");
+      }
+  
+      addTask(args[1]);
+    } catch (error) {
+      console.log(error.message);
     }
-
-    addTask(args[1]);
     break;
 
   case "list":
@@ -31,7 +34,7 @@ switch (command) {
 
       getTasks(args[1]);
     } catch (error) {
-      console.log(error);
+      console.log(error.message);
     }
     break;
 
@@ -43,7 +46,7 @@ switch (command) {
 
       updateTask(args[1], { description: args[2] });
     } catch (error) {
-      console.log(error);
+      console.log(error.message);
     }
     break;
 
@@ -79,7 +82,7 @@ switch (command) {
         deleteTask(args[1]);
       }
     } catch (error) {
-      console.log(error);
+      console.log(error.message);
     }
     break;
 
@@ -91,7 +94,7 @@ switch (command) {
 
       updateTask(args[1], { status: "in-progress" });
     } catch (error) {
-      console.log(error);
+      console.log(error.message);
     }
     break;
 
@@ -103,13 +106,9 @@ switch (command) {
 
       updateTask(args[1], { status: "done" });
     } catch (error) {
-      console.log(error);
+      console.log(error.message);
     }
     break;
-
-  // case "version":
-  //   console.log(version);
-  //   break;
 
   case "help":
     break;

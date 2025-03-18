@@ -29,7 +29,7 @@ describe("deleteTask function", () => {
     fs.readFileSync.mockImplementation(() => JSON.stringify([]));
 
     expect(() => deleteTask("all")).toThrow("No task currently in memory");
-    expect(console.log).toHaveBeenCalledWith(expect.any(Error));
+    expect(console.log).toHaveBeenCalledWith("No task currently in memory");
   });
 
   test("should delete a task given it's ID", () => {
@@ -79,6 +79,6 @@ describe("deleteTask function", () => {
     });
 
     expect(() => deleteTask(1)).toThrow("File system error");
-    expect(console.log).toHaveBeenCalledWith(expect.any(Error));
+    expect(console.log).toHaveBeenCalledWith("File system error");
   });
 });

@@ -84,6 +84,6 @@ describe("addTask function", () => {
     });
 
     expect(() => addTask("Failing task")).toThrow("File system error");
-    expect(console.log).toHaveBeenCalledWith(expect.any(Error));
+    expect(console.log).toHaveBeenCalledWith("File system error");
   });
 });
