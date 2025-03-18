@@ -36,7 +36,6 @@ const addTask = (description) => {
     console.log("Task added successfully", `ID: ${newTask.id}`);
     return newTask;
   } catch (error) {
-    console.log(error.message);
     throw error;
   }
 };
@@ -71,7 +70,6 @@ const getTasks = (status) => {
       }
     }
   } catch (error) {
-    console.log(error.message);
     throw error;
   }
 };
@@ -99,9 +97,7 @@ const updateTask = (id, option) => {
           } else if (option?.status) {
             task.status = option.status;
           } else {
-            throw new Error(
-              "A description or status is needed"
-            );
+            throw new Error("A description or status is needed");
           }
 
           task.updatedAt = new Date().toString();
@@ -117,7 +113,6 @@ const updateTask = (id, option) => {
 
     return updatedTask;
   } catch (error) {
-    console.log(error.message);
     throw error;
   }
 };
@@ -159,7 +154,6 @@ const deleteTask = (option) => {
       console.log("All tasks deleted successfully");
     }
   } catch (error) {
-    console.log(error.message);
     throw error;
   }
 };
