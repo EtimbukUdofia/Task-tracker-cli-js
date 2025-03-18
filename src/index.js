@@ -12,7 +12,7 @@ switch (command) {
       if (args.length < 2) {
         throw new Error("The 'add' command needs a description");
       }
-  
+
       addTask(args[1]);
     } catch (error) {
       console.log(error.message);
@@ -57,7 +57,7 @@ switch (command) {
           "The 'delete' command needs an 'id' value or delete all tasks with the 'all' option"
         );
       }
-      
+
       if (args[1] === "all") {
         const rl = readline.createInterface({
           input: process.stdin,
@@ -66,16 +66,21 @@ switch (command) {
         rl.question(
           `Are you sure you want to delete all your tasks? (Y/n): `,
           (answer) => {
-            if (answer === "" || answer.toLowerCase() === "y") {
-              deleteTask("all");
-            } else if (answer.toLowerCase() === "n") {
-              console.log("Deletion cancelled");
-            } else {
-              console.log(
-                `Unknown command: '${answer}'. Enter either 'y' or 'n'`
-              );
+            try {
+              if (answer === "" || answer.toLowerCase() === "y") {
+                deleteTask("all");
+              } else if (answer.toLowerCase() === "n") {
+                console.log("Deletion cancelled");
+              } else {
+                throw new Error(
+                  `Unknown command: '${answer}'. Enter either 'y' or 'n'`
+                );
+              }
+            } catch (error) {
+              console.log(error.message);
+            } finally {
+              rl.close();
             }
-            rl.close();
           }
         );
       } else {
