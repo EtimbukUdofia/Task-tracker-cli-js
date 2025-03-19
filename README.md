@@ -120,3 +120,8 @@ task-cli delete 1
 ```bash
 task-cli delete all
 ```
+
+### Help
+```bash
+task-cli help
+```

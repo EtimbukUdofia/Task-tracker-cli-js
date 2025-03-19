@@ -164,9 +164,37 @@ const checkTasksFile = () => {
   }
 };
 
+const displayHelp = () => {
+  console.log(`
+    Usage: task-cli <command>
+
+    Commands:
+      help                    Show help information
+
+      add [desc]              Adds task with provided description
+
+      list                    Lists all tasks
+
+      list all                Lists all tasks
+
+      list [status]           Lists all tasks with the corresponding status (todo, in-progress, done)
+
+      update [id] [desc]      Updates the description of the task with corresponding id
+
+      mark-in-progress [id]   Updates the status of the task with corresponding ID to "in-progress"
+
+      mark-done [id]          Updates the status of the task with corresponding ID to "done"
+
+      delete [id]             Deletes the task with the provided task id
+
+      delete all              Deletes all tasks
+  `);
+};
+
 module.exports = {
   addTask,
   getTasks,
   updateTask,
   deleteTask,
+  displayHelp,
 };

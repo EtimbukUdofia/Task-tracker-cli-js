@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 const readline = require("readline");
-const { addTask, getTasks, updateTask, deleteTask } = require("./utils.js");
+const { addTask, getTasks, updateTask, deleteTask, displayHelp } = require("./utils.js");
 
 // CLI logic
 const args = process.argv.slice(2);
@@ -116,9 +116,11 @@ switch (command) {
     break;
 
   case "help":
+    displayHelp();
     break;
 
   default:
     console.log(`<command> ${command} not found`);
+    displayHelp();
     break;
 }
