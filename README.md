@@ -20,13 +20,16 @@ TaskTrackerCLI is a simple command-line tool for managing tasks. It is written i
 
 ## Installation
 
-To use Task-Tracker-CLI, first, clone the repository and then install the necessary dependencies. After that, you can use the npm link command to make the task-cli command available globally on your system.
-
 ```bash
 git clone https://github.com/EtimbukUdofia/Task-tracker-cli-js
 cd task-tracker-cli
 npm install
 npm install -g .
+```
+
+## Uninstallation
+```bash
+npm uninstall -g task-cli
 ```
 
 ## Usage
