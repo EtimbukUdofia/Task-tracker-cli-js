@@ -181,9 +181,9 @@ const displayHelp = () => {
 
       update [id] [desc]      Updates the description of the task with corresponding id
 
-      mark-in-progress [id]   Updates the status of the task with corresponding ID to "in-progress"
+      mark-in-progress [id]   Updates the status of the task with corresponding id to "in-progress"
 
-      mark-done [id]          Updates the status of the task with corresponding ID to "done"
+      mark-done [id]          Updates the status of the task with corresponding id to "done"
 
       delete [id]             Deletes the task with the provided task id
 
