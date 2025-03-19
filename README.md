@@ -42,7 +42,7 @@ task-cli list
 
 ### List tasks by status
 ```
-task-cli list {filter}
+task-cli list [status]
 ```
 
 #### Example:
