@@ -33,32 +33,25 @@ npm uninstall -g task-cli
 ```
 
 ## Usage
+```bash
+task-cli <command> [arguments]
+```
 
 ### List all tasks
 
-```
+```bash
 task-cli list
 ```
 
 ### List tasks by status
-```
-task-cli list [status]
-```
-
-#### Example:
-
-- To list all pending tasks (todo):
-```
+```bash
+# To list the tasks that have todo status
 task-cli list todo
-```
 
-- To list all tasks in progress (in-progress):
-```
+# To list the tasks that have in-progress status
 task-cli list in-progress
-```
 
-- To list all completed tasks (done):
-```
+# To list the tasks that have done status
 task-cli list done
 ```
 
@@ -67,52 +60,28 @@ task-cli list done
 ```bash
 task-cli add "Task description"
 ```
-#### Example:
-
-```bash
-task-cli add "Task 1"
-```
-
 
 ### Update a task
 
 ```bash
-task-cli update "ID" "New task description"
-```
-#### Example:
-
-```bash
+# To update the description of task with ID of 1 
 task-cli update 1 "Updated Task 1"
 ```
 
 ### Update task status
-- To mark a task as "in-progress", use:
 
 ```bash
-task-cli mark-in-progress "ID"
-```
-
-- To mark a task as "done", use:
-```bash
-task-cli mark-done "ID"
-```
-
-#### Example:
-```bash
-# mark task as "in-progress"
+# mark task with ID of 1 as "in-progress"
 task-cli mark-in-progress 1
 
-#mark task as "done"
+# mark task with ID of 1 as "done"
 task-cli mark-done 1
 ```
 
 ### Delete a task
 
 ```bash
-task-cli delete "ID"
-```
-#### Example:
-```bash
+# delete task with ID 1
 task-cli delete 1
 ```
 
